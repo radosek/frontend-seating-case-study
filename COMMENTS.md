@@ -38,3 +38,8 @@ Zoov celkem pomáhá na komplexní state managment, ale přijde mi, že tam nen�
 
 Používám, abych neměl při `StrictMode` dvoje data.
 Zárovň se to hodí v situaci, když chcem měnit např. state, až poté, co se opravdu změní a ne při mountu.
+Nakonec jsem vyměnil za klasicky useEffect, jelikož to nějak blbne v kombinaci Cloudflare Worker + Vite.
+
+## Deploy
+
+Cloudlfare Workers <3 jelikož používám většinou buď Astro nebo Hono.

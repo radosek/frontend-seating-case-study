@@ -1,7 +1,6 @@
 import { StoreModule } from "@/store/mainStore";
 import { useTrackedModule } from "zoov/tracked";
-import { useMemo } from "react";
-import { useDidMountEffect } from "@/hooks/useDidMountEffect";
+import { useMemo, useEffect } from "react";
 import { colorForType, textColorForBgHsl } from "@/lib/utils";
 
 import { Nav } from "@/components/Nav";
@@ -52,7 +51,7 @@ export function App() {
 		return eventTickets?.ticketTypes?.find(({ id }) => id === ticketTypeId)?.name ?? "NO NAME";
 	}
 
-	useDidMountEffect(() => {
+	useEffect(() => {
 		fetchEvent();
 	}, []);
 

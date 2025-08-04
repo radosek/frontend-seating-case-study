@@ -33,8 +33,8 @@ Aplikace by měla být schopna:
 -   [x] Po kliku na sedadlo umožnit jeho přidání do košíku (případně odebrání, pokud je již v košíku).
 -   [x] Spravovat obsah košíku s využitím promyšleného state managementu.
 -   [x] Zobrazit aktuální počet vstupenek v košíku a jejich celkovou hodnotu (ve správné měně a formátu).
--   [ ] Po kliknutí na "Koupit vstupenky" umožnit přihlášení nebo vyplnění potřebných údajů jako "host".
--   [ ] Vytvořit objednávku skrze API a zobrazit výsledek (úspěch nebo chybu).
+-   [x] Po kliknutí na "Koupit vstupenky" umožnit přihlášení nebo vyplnění potřebných údajů jako "host".
+-   [x] Vytvořit objednávku skrze API a zobrazit výsledek (úspěch nebo chybu).
 
 ## 🌟 Bonusové Funkce
 

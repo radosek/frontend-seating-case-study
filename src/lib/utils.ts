@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { google, outlook, ics } from "calendar-link";
+import { google } from "calendar-link";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -39,7 +39,7 @@ export function getEventCalendarLinks(event: T_Event) {
 
 	return {
 		google: google(base), // → https://calendar.google.com/…
-		outlook: outlook(base), // → https://outlook.office.com/…
-		icsBlobUrl: URL.createObjectURL(new Blob([ics(base)], { type: "text/calendar;charset=utf-8" })),
+		//outlook: outlook(base), // → https://outlook.office.com/…
+		//icsBlobUrl: URL.createObjectURL(new Blob([ics(base)], { type: "text/calendar;charset=utf-8" })),
 	};
 }

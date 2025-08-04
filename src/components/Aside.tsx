@@ -30,25 +30,6 @@ export function Aside({ event }: Props) {
 								Google Calendar
 							</a>
 						</li>
-						<li>
-							<a
-								href={eventLinks.outlook}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="block w-full text-left hover:underline"
-							>
-								Outlook / Microsoft 365
-							</a>
-						</li>
-						<li>
-							<a
-								href={eventLinks.icsBlobUrl}
-								download={`${event.namePub}.ics`}
-								className="block w-full text-left hover:underline"
-							>
-								Apple / Other (.ics)
-							</a>
-						</li>
 					</ul>
 				</PopoverContent>
 			</Popover>

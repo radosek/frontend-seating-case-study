@@ -15,7 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import "./App.css";
 
 export function App() {
-	const [{ user, event, eventTickets, cart }, actions] = useTrackedModule(StoreModule);
+	const [{ event, eventTickets }, actions] = useTrackedModule(StoreModule);
 
 	// TODO: error handling
 	async function fetchEventTickets(eventId: T_Event["eventId"]) {
@@ -47,16 +47,6 @@ export function App() {
 		rows.forEach((r) => r.seats.forEach((s) => set.add(s.ticketTypeId)));
 		return [...set];
 	}, [rows]);
-
-	//function toggle(seat: Seat) {
-	//	setSelected((prev) => {
-	//		const next = new Set(prev);
-	//		if (next.has(seat.seatId)) next.delete(seat.seatId);
-	//		else next.add(seat.seatId);
-	//		onChange?.([...next]);
-	//		return next;
-	//	});
-	//}
 
 	function findTicketTypeName(ticketTypeId: string) {
 		return eventTickets?.ticketTypes?.find(({ id }) => id === ticketTypeId)?.name ?? "NO NAME";

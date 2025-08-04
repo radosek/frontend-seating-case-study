@@ -5,13 +5,44 @@ import { getEventCalendarLinks } from "@/lib/utils";
 type Props = { event: T_Event };
 
 export function Aside({ event }: Props) {
+	const formattedDateFrom = new Date(event.dateFrom).toLocaleString("default", {
+		weekday: "short",
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+		hour: "2-digit",
+		minute: "2-digit",
+	});
+	const formattedDateTo = new Date(event.dateTo).toLocaleString("default", {
+		weekday: "short",
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+		hour: "2-digit",
+		minute: "2-digit",
+	});
+
 	const eventLinks = getEventCalendarLinks(event);
 
 	return (
 		<div className="w-full md:max-w-sm bg-white rounded-md shadow-sm p-4 flex flex-col gap-4">
-			<img src={event.headerImageUrl} alt="" className="bg-zinc-100 rounded-md h-48 object-cover" />
+			<img src={event.headerImageUrl} alt="" className="w-full h-auto rounded-md bg-zinc-100" />
 			<h1 className="text-xl text-zinc-900 font-semibold">{event.namePub}</h1>
-			<p className="text-sm text-zinc-500 line-clamp-6">{event.description}</p>
+			<p className="text-sm text-zinc-500">{event.description}</p>
+			<p className="text-sm text-zinc-500 flex items-center gap-1 flex-wrap">
+				<span>🗓️</span>
+				<span>{formattedDateFrom}</span>
+				<span>-</span>
+				<span>{formattedDateTo}</span>
+			</p>
+			<a
+				href={`https://mapy.cz/?q=${encodeURIComponent(event.place)}`}
+				target="_blank"
+				rel="noopener noreferrer"
+				className="text-sm text-zinc-500 hover:underline"
+			>
+				📍 {event.place}
+			</a>
 
 			<Popover>
 				<PopoverTrigger asChild>

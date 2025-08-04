@@ -27,7 +27,7 @@ export const SingleSeat = forwardRef<HTMLDivElement, SeatProps>(({ row, place },
 				key={place}
 				disabled
 				title={`Row ${row.seatRow} • Place ${place} • Unavailable`}
-				className="h-9 rounded-md border text-xs text-neutral-500 cursor-not-allowed"
+				className="h-9 rounded-lg border text-sm text-neutral-500 cursor-not-allowed flex items-center justify-center"
 				style={{
 					backgroundImage: "repeating-linear-gradient(45deg,#f1f1f1, #f1f1f1 6px, #e5e5e5 6px, #e5e5e5 12px)",
 				}}
@@ -78,16 +78,29 @@ export const SingleSeat = forwardRef<HTMLDivElement, SeatProps>(({ row, place },
 			>
 				<div ref={ref}>{place}</div>
 			</PopoverTrigger>
-			<PopoverContent>
-				<div className="flex flex-col text-center">
-					<p className="text-sm font-medium leading-none tracking-tight text-neutral-800">{ticketType?.name ?? "Neznámý typ"}</p>
-
-					<p className="text-2xl font-bold text-primary">
-						{ticketType?.price} {event?.currencyIso || null}
-					</p>
-
-					<Button variant={isInCart ? "destructive" : "default"} size="sm" onClick={handleCartUpdate}>
-						{isInCart ? "Remove from cart" : "Add to cart"}
+			<PopoverContent className="w-64 p-4 bg-white rounded-lg shadow-md border border-zinc-200">
+				<div className="flex flex-col gap-3">
+					<h3 className="text-lg font-semibold text-zinc-900 text-center">Seat Details</h3>
+					<div className="flex justify-between text-sm text-zinc-600">
+						<span>Row:</span>
+						<span className="font-medium">{row.seatRow}</span>
+					</div>
+					<div className="flex justify-between text-sm text-zinc-600">
+						<span>Seat:</span>
+						<span className="font-medium">{place}</span>
+					</div>
+					<div className="flex justify-between text-sm text-zinc-600">
+						<span>Ticket Type:</span>
+						<span className="font-medium">{ticketType?.name ?? "Unknown"}</span>
+					</div>
+					<div className="flex justify-between text-sm text-zinc-600">
+						<span>Price:</span>
+						<span className="font-medium text-xl text-zinc-900">
+							{ticketType?.price ?? 0} {event?.currencyIso ?? ""}
+						</span>
+					</div>
+					<Button variant={isInCart ? "destructive" : "default"} className="w-full mt-2" onClick={handleCartUpdate}>
+						{isInCart ? "Remove from Cart" : "Add to Cart"}
 					</Button>
 				</div>
 			</PopoverContent>

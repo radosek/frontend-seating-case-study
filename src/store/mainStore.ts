@@ -7,11 +7,13 @@ import { setAutoFreeze } from "immer";
 
 setAutoFreeze(false);
 
+import USER from "./slice/user";
 import EVENT from "./slice/event";
 import EVENT_TICKETS from "./slice/eventTickets";
 import CART from "./slice/cart";
 
 const DEFAULT = structuredClone({
+	user: USER.VALUES,
 	event: EVENT.VALUES,
 	eventTickets: EVENT_TICKETS.VALUES,
 	cart: CART.VALUES,
@@ -19,6 +21,7 @@ const DEFAULT = structuredClone({
 
 export const StoreModule = defineModule(DEFAULT)
 	.actions({
+		...USER.ACTIONS,
 		...EVENT.ACTIONS,
 		...EVENT_TICKETS.ACTIONS,
 		...CART.ACTIONS,
@@ -27,44 +30,15 @@ export const StoreModule = defineModule(DEFAULT)
 		updateCart(
 			isInCart: boolean,
 			seat: T_EventTickets["seatRows"][number]["seats"][number],
+			row: T_EventTickets["seatRows"][number]["seatRow"],
 			price: T_EventTickets["ticketTypes"][number]["price"],
 		) {
 			const cartTotal = getState().cart.total;
 
-			if (isInCart) getActions().removeCartTicket(seat);
-			else getActions().addCartTicket(seat);
+			if (isInCart) getActions().removeCartTicket({ ...seat, row });
+			else getActions().addCartTicket({ ...seat, row });
 
 			getActions().setCartTotal(isInCart ? cartTotal - price : cartTotal + price);
 		},
 	}))
-	//.middleware((store) =>
-	//  temporal(store, {
-	//    partialize: (state) => {
-	//      const { trigger, isGlobal, name } = state;
-	//      return { trigger, isGlobal, name };
-	//    },
-	//    handleSet: (handleSet) =>
-	//      throttle<typeof handleSet>((state) => {
-	//        handleSet(state);
-	//      }, 1000),
-	//    //equality: (pastState, currentState) =>
-	//    //  pastState.isGlobal !== currentState.isGlobal && pastState.trigger !== currentState.trigger,
-	//    diff: (pastState, currentState) => {
-	//      const myDiff = diff(currentState, pastState);
-	//      const newStateFromDiff = myDiff.reduce(
-	//        (acc, difference) => {
-	//          type Key = keyof typeof currentState;
-	//          if (difference.type === "CHANGE") {
-	//            const pathAsString = difference.path.join(".") as Key;
-	//            acc[pathAsString] = difference.value;
-	//          }
-	//          return acc;
-	//        },
-	//        {} as Partial<typeof currentState>,
-	//      );
-	//      return isNotEmptyObject(newStateFromDiff) ? newStateFromDiff : null;
-	//    },
-	//    limit: 100,
-	//  }),
-	//)
 	.build();

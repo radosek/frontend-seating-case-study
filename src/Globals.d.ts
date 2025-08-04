@@ -33,7 +33,19 @@ declare global {
 			seatId: T_EventTickets["seatRows"][number]["seats"][number]["seatId"];
 			place: T_EventTickets["seatRows"][number]["seats"][number]["place"];
 			ticketTypeId: T_EventTickets["seatRows"][number]["seats"][number]["ticketTypeId"];
+			row: T_EventTickets["seatRows"][number]["seatRow"];
 		}[];
 		total: number;
+	};
+
+	type T_User = {
+		firstName: string;
+		lastName: string;
+		email: string;
+	};
+
+	type T_UserRes = {
+		message: string;
+		user: T_User;
 	};
 }

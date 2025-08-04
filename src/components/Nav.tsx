@@ -1,3 +1,7 @@
+import { StoreModule } from "@/store/mainStore";
+import { useTrackedModule } from "zoov/tracked";
+import { useState } from "react";
+
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -6,58 +10,128 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu.tsx";
+} from "@/components/ui/dropdown-menu";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar.tsx";
-import { Button } from "@/components/ui/button.tsx";
+import { Button } from "@/components/ui/button";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-type Props = {
-	isLoggedIn: boolean;
-};
+import Avatar from "boring-avatars";
+import { toast } from "sonner";
 
-// header (wrapper)
-export function Nav({ isLoggedIn }: Props) {
+export function Nav() {
+	const [{ user }, actions] = useTrackedModule(StoreModule);
+
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [loading, setLoading] = useState(false);
+
+	const handleLogin = async (e: React.FormEvent) => {
+		e.preventDefault();
+		if (loading) return;
+		setLoading(true);
+		try {
+			const res = await fetch("https://nfctron-frontend-seating-case-study-2024.vercel.app/login", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ email, password }),
+			});
+
+			if (!res.ok) {
+				throw new Error("Invalid credentials");
+			}
+
+			const data: T_UserRes = await res.json();
+			actions.setUser(data.user);
+			toast.success(data.message ?? "Logged in");
+		} catch (error: unknown) {
+			toast.error((error as Error).message ?? "Login failed");
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const handleLogout = () => actions.setUser(null);
+
 	return (
 		<nav className="sticky top-0 left-0 right-0 bg-white border-b border-zinc-200 flex justify-center">
-			{/* inner content */}
 			<div className="max-w-screen-lg p-4 grow flex items-center justify-between gap-3">
-				{/* application/author image/logo placeholder */}
+				{/* Logo placeholder */}
 				<div className="max-w-[250px] w-full flex">
 					<div className="bg-zinc-100 rounded-md size-12" />
 				</div>
-				{/* app/author title/name placeholder */}
-				<div className="bg-zinc-100 rounded-md h-8 w-[200px]" />
-				{/* user menu */}
-				<div className="max-w-[250px] w-full flex justify-end">
-					{isLoggedIn ? (
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<Button variant="ghost">
-									<div className="flex items-center gap-2">
-										<Avatar>
-											<AvatarImage src={"https://source.boringavatars.com/marble/120/<user-email>?colors=25106C,7F46DB"} />
-											<AvatarFallback>CN</AvatarFallback>
-										</Avatar>
 
-										<div className="flex flex-col text-left">
-											<span className="text-sm font-medium">John Doe</span>
-											<span className="text-xs text-zinc-500">john.doe@nfctron.com</span>
-										</div>
+				{/* Title placeholder */}
+				<div className="bg-zinc-100 rounded-md h-8 w-[200px]" />
+
+				{/* Right side */}
+				<div className="max-w-[250px] w-full flex justify-end">
+					{user ? (
+						<DropdownMenu>
+							<DropdownMenuTrigger>
+								<div className="flex items-center gap-2 cursor-pointer">
+									<div className="w-8 h-8">
+										<Avatar variant="pixel" name={user.email} colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]} />
 									</div>
-								</Button>
+
+									<div className="flex flex-col text-left">
+										<span className="text-sm font-medium text-zinc-900">
+											{user.firstName} {user.lastName}
+										</span>
+										<span className="text-xs text-zinc-500">{user.email}</span>
+									</div>
+								</div>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent className="w-[250px]">
-								<DropdownMenuLabel>John Doe</DropdownMenuLabel>
+								<DropdownMenuLabel>
+									{user.firstName} {user.lastName}
+								</DropdownMenuLabel>
 								<DropdownMenuSeparator />
 								<DropdownMenuGroup>
-									<DropdownMenuItem disabled>Logout</DropdownMenuItem>
+									<DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+										Logout
+									</DropdownMenuItem>
 								</DropdownMenuGroup>
 							</DropdownMenuContent>
 						</DropdownMenu>
 					) : (
-						<Button disabled variant="secondary">
-							Login or register
-						</Button>
+						<Popover>
+							<PopoverTrigger asChild>
+								<Button variant="secondary">Login or register</Button>
+							</PopoverTrigger>
+							<PopoverContent align="end" className="w-[280px]">
+								<form onSubmit={handleLogin} className="grid gap-4">
+									<div className="grid gap-2">
+										<Label htmlFor="email">Email</Label>
+										<Input
+											id="email"
+											type="email"
+											autoCorrect="off"
+											autoComplete="email"
+											value={email}
+											onChange={(e) => setEmail(e.target.value)}
+											required
+										/>
+									</div>
+									<div className="grid gap-2">
+										<Label htmlFor="password">Password</Label>
+										<Input
+											id="password"
+											type="password"
+											autoCorrect="off"
+											autoComplete="currentPassword"
+											value={password}
+											onChange={(e) => setPassword(e.target.value)}
+											required
+										/>
+									</div>
+									<Button className="w-full" type="submit" disabled={loading}>
+										{loading ? "Logging in..." : "Login"}
+									</Button>
+								</form>
+							</PopoverContent>
+						</Popover>
 					)}
 				</div>
 			</div>

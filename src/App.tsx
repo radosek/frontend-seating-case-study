@@ -9,14 +9,13 @@ import { Aside } from "@/components/Aside";
 import { Footer } from "@/components/Footer";
 import { SeatRow } from "@/components/SeatRow.tsx";
 
+import { Toaster } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import "./App.css";
 
-const isLoggedIn = false;
-
 export function App() {
-	const [{ event, eventTickets, cart }, actions] = useTrackedModule(StoreModule);
+	const [{ user, event, eventTickets, cart }, actions] = useTrackedModule(StoreModule);
 
 	// TODO: error handling
 	async function fetchEventTickets(eventId: T_Event["eventId"]) {
@@ -70,7 +69,7 @@ export function App() {
 	return (
 		<div className="flex flex-col grow">
 			{/* header (wrapper) */}
-			<Nav isLoggedIn={isLoggedIn} />
+			<Nav />
 
 			{/* main body (wrapper) */}
 			<main className="grow flex flex-col justify-center">
@@ -104,7 +103,7 @@ export function App() {
 										backgroundImage: "repeating-linear-gradient(45deg,#f1f1f1, #f1f1f1 6px, #e5e5e5 6px, #e5e5e5 12px)",
 									}}
 								/>
-								<span className="text-black p-2 rounded">Unavailable</span>
+								<span className="text-zinc-900 p-2 rounded">Unavailable</span>
 							</div>
 						</div>
 					</div>
@@ -114,8 +113,10 @@ export function App() {
 				</section>
 			</main>
 
+			<Toaster theme="system" position="bottom-center" duration={4000} className="rounded" visibleToasts={3} richColors expand />
+
 			{/* bottom cart affix (wrapper) */}
-			<Footer cart={cart} currencyIso={event?.currencyIso || null} />
+			<Footer currencyIso={event?.currencyIso || null} />
 		</div>
 	);
 }

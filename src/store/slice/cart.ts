@@ -5,11 +5,14 @@ type Draft = WritableDraft<{ cart: T_Cart }>;
 const VALUES: T_Cart = { tickets: [], total: 0 };
 
 const ACTIONS = {
-	setCartData(draft: Draft, cart: T_Cart) {
-		draft.cart = cart;
+	clearCart(draft: Draft) {
+		draft.cart = { tickets: [], total: 0 };
 	},
-	addCartTicket({ cart }: Draft, ticket: T_Cart["tickets"][number]) {
-		cart.tickets = [...cart.tickets, ticket];
+	addCartTicket(
+		{ cart }: Draft,
+		ticketWithRow: T_Cart["tickets"][number] & { row: T_EventTickets["seatRows"][number]["seatRow"] },
+	) {
+		cart.tickets = [...cart.tickets, ticketWithRow];
 	},
 	removeCartTicket({ cart }: Draft, ticket: T_Cart["tickets"][number]) {
 		cart.tickets = cart.tickets.filter((_ticket) => _ticket.seatId !== ticket.seatId);

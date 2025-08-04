@@ -44,7 +44,12 @@ export const SingleSeat = forwardRef<HTMLDivElement, SeatProps>(({ row, place },
 	const isInCart = Boolean(cart.tickets.find((ticket) => ticket.seatId === seat.seatId));
 
 	function handleCartUpdate() {
-		actions.updateCart(isInCart, seat as T_EventTickets["seatRows"][number]["seats"][number], ticketType?.price ?? 0);
+		actions.updateCart(
+			isInCart,
+			seat as T_EventTickets["seatRows"][number]["seats"][number],
+			row.seatRow,
+			ticketType?.price ?? 0,
+		);
 		setPopoverOpen(false);
 	}
 
@@ -63,8 +68,8 @@ export const SingleSeat = forwardRef<HTMLDivElement, SeatProps>(({ row, place },
 				title={`Row ${row.seatRow} • Place ${place}`}
 				className={[
 					"h-9 rounded-md border text-xs transition",
-					"hover:ring-2 hover:ring-black/40",
-					isInCart ? "ring-2 ring-black" : "",
+					"hover:ring-2 hover:ring-zinc-950/40",
+					isInCart ? "ring-2 ring-zinc-950" : "",
 				].join(" ")}
 				style={{
 					backgroundColor: bg,

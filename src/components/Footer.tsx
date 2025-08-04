@@ -109,7 +109,7 @@ export function Footer({ currencyIso }: Props) {
 							Checkout now
 						</Button>
 					</DialogTrigger>
-					<DialogContent className="sm:max-w-lg text-zinc-900">
+					<DialogContent className="w-[90%] md:max-w-lg mx-auto max-w-lg text-zinc-900">
 						<DialogHeader>
 							<DialogTitle>Review your tickets</DialogTitle>
 							<DialogDescription>Verify your selection before proceeding to payment.</DialogDescription>

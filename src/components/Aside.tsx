@@ -8,7 +8,7 @@ export function Aside({ event }: Props) {
 	const eventLinks = getEventCalendarLinks(event);
 
 	return (
-		<div className="w-full max-w-sm bg-white rounded-md shadow-sm p-3 flex flex-col gap-2">
+		<div className="w-full md:max-w-sm bg-white rounded-md shadow-sm p-3 flex flex-col gap-2">
 			<img src={event.headerImageUrl} alt="" className="bg-zinc-100 rounded-md h-32 object-cover" />
 			<h1 className="text-xl text-zinc-900 font-semibold">{event.namePub}</h1>
 			<p className="text-sm text-zinc-500 line-clamp-4">{event.description}</p>

@@ -63,7 +63,7 @@ export function App() {
 			{/* main body (wrapper) */}
 			<main className="grow flex flex-col justify-center">
 				{/* inner content */}
-				<section className="max-w-screen-lg m-auto p-4 flex items-start grow gap-3 w-full">
+				<section className="max-w-screen-lg m-auto p-4 flex flex-col md:flex-row items-start grow gap-3 w-full">
 					{/* Seat map */}
 					<div className="bg-white rounded-md flex flex-col p-3 w-full self-stretch shadow-sm space-y-3">
 						{rows.map((row) => (
@@ -98,7 +98,9 @@ export function App() {
 					</div>
 
 					{/* event info */}
-					{event ? <Aside event={event} /> : <Skeleton className="h-[20px] w-[100px] rounded-full" />}
+					<div className="order-first md:order-last">
+						{event ? <Aside event={event} /> : <Skeleton className="h-[20px] w-[100px] rounded-full" />}
+					</div>
 				</section>
 			</main>
 

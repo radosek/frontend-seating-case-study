@@ -1,0 +1,10 @@
+.gitkeep
+.env*
+*.ico
+*.lock
+.yarn
+.pnp.*
+node_modules
+vendor
+.[tj]sx?
+.json

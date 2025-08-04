@@ -21,7 +21,7 @@ import Avatar from "boring-avatars";
 import { toast } from "sonner";
 
 export function Nav() {
-	const [{ user }, actions] = useTrackedModule(StoreModule);
+	const [{ user, event }, actions] = useTrackedModule(StoreModule);
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -59,11 +59,19 @@ export function Nav() {
 			<div className="max-w-screen-lg p-4 grow flex items-center justify-between gap-3">
 				{/* Logo placeholder */}
 				<div className="max-w-[250px] w-full flex">
-					<div className="bg-zinc-100 rounded-md size-12" />
+					{event ? (
+						<img src={event.headerImageUrl} alt={event.namePub} className="rounded-md size-12 object-cover" />
+					) : (
+						<div className="bg-zinc-100 rounded-md size-12" />
+					)}
 				</div>
 
 				{/* Title placeholder */}
-				<div className="bg-zinc-100 rounded-md h-8 w-[200px]" />
+				{event ? (
+					<span className="text-xl font-semibold text-zinc-900">{event.namePub}</span>
+				) : (
+					<div className="bg-zinc-100 rounded-md h-8 w-[200px]" />
+				)}
 
 				{/* Right side */}
 				<div className="max-w-[250px] w-full flex justify-end">

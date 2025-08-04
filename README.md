@@ -31,14 +31,14 @@ Aplikace by měla být schopna:
     -   zde není třeba mapu vykreslovat optimalizovaně, např. pomocí Canvas API/SVG, postačí jako HTML prvky
     -   pozor na pořadí sedadel (ne vždy přijdou všechna sedadla po sobě 👀)
 -   [x] Po kliku na sedadlo umožnit jeho přidání do košíku (případně odebrání, pokud je již v košíku).
--   [ ] Spravovat obsah košíku s využitím promyšleného state managementu.
+-   [x] Spravovat obsah košíku s využitím promyšleného state managementu.
 -   [x] Zobrazit aktuální počet vstupenek v košíku a jejich celkovou hodnotu (ve správné měně a formátu).
 -   [ ] Po kliknutí na "Koupit vstupenky" umožnit přihlášení nebo vyplnění potřebných údajů jako "host".
 -   [ ] Vytvořit objednávku skrze API a zobrazit výsledek (úspěch nebo chybu).
 
 ## 🌟 Bonusové Funkce
 
--   [ ] Umožnit přidání akce do kalendáře.
+-   [x] Umožnit přidání akce do kalendáře.
 -   [ ] Multijazyčnost aplikace.
 
 _A dalším vychytávkám se meze nekladou! Ukažte, co umíte! 💫_

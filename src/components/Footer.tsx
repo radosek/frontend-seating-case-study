@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button.tsx";
-import { formatPriceCzk } from "@/lib/utils";
 
 type Props = {
 	cart: T_Cart;
+	currencyIso: T_Event["currencyIso"] | null;
 };
 
 // bottom cart affix (wrapper)
-export function Footer({ cart }: Props) {
+export function Footer({ cart, currencyIso }: Props) {
 	return (
 		<footer className="sticky bottom-0 left-0 right-0 bg-white text-black/70 border-t border-zinc-200 flex justify-center">
 			{/* inner content */}
@@ -14,11 +14,13 @@ export function Footer({ cart }: Props) {
 				{/* total in cart state */}
 				<div className="flex flex-col">
 					{cart.tickets.length ? <span>Total for {cart.tickets.length} tickets</span> : <span>No tickets in cart</span>}
-					<span className="text-2xl font-semibold">{formatPriceCzk(cart.total <= 0 ? 0 : cart.total)}</span>
+					<span className="text-2xl font-semibold">
+						{cart.total <= 0 ? 0 : cart.total} {currencyIso}
+					</span>
 				</div>
 
 				{/* checkout button */}
-				<Button disabled variant="default">
+				<Button disabled={!cart.tickets.length || !cart.total} variant="default">
 					Checkout now
 				</Button>
 			</div>

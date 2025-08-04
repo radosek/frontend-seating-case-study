@@ -2,7 +2,7 @@ import { StoreModule } from "@/store/mainStore";
 import { useTrackedModule } from "zoov/tracked";
 
 import { forwardRef, useState } from "react";
-import { colorForType, textColorForBgHsl, formatPriceCzk } from "@/lib/utils.ts";
+import { colorForType, textColorForBgHsl } from "@/lib/utils.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover.tsx";
 
@@ -12,7 +12,7 @@ interface SeatProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 export const SingleSeat = forwardRef<HTMLDivElement, SeatProps>(({ row, place }, ref) => {
-	const [{ cart, ticketTypes }, actions] = useTrackedModule(StoreModule);
+	const [{ event, cart, eventTickets }, actions] = useTrackedModule(StoreModule);
 
 	const [popoverOpen, setPopoverOpen] = useState(false);
 
@@ -37,7 +37,7 @@ export const SingleSeat = forwardRef<HTMLDivElement, SeatProps>(({ row, place },
 		);
 	}
 
-	const ticketType = ticketTypes?.find(
+	const ticketType = eventTickets?.ticketTypes?.find(
 		({ id }) => id === (seat as T_EventTickets["seatRows"][number]["seats"][number]).ticketTypeId,
 	);
 
@@ -77,7 +77,9 @@ export const SingleSeat = forwardRef<HTMLDivElement, SeatProps>(({ row, place },
 				<div className="flex flex-col text-center">
 					<p className="text-sm font-medium leading-none tracking-tight text-neutral-800">{ticketType?.name ?? "Neznámý typ"}</p>
 
-					<p className="text-2xl font-bold text-primary">{formatPriceCzk(ticketType?.price)}</p>
+					<p className="text-2xl font-bold text-primary">
+						{ticketType?.price} {event?.currencyIso || null}
+					</p>
 
 					<Button variant={isInCart ? "destructive" : "default"} size="sm" onClick={handleCartUpdate}>
 						{isInCart ? "Remove from cart" : "Add to cart"}

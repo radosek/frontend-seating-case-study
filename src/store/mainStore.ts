@@ -7,17 +7,20 @@ import { setAutoFreeze } from "immer";
 
 setAutoFreeze(false);
 
+import EVENT from "./slice/event";
+import EVENT_TICKETS from "./slice/eventTickets";
 import CART from "./slice/cart";
-import TICKET_TYPES from "./slice/ticketTypes";
 
 const DEFAULT = structuredClone({
-	ticketTypes: TICKET_TYPES.VALUES,
+	event: EVENT.VALUES,
+	eventTickets: EVENT_TICKETS.VALUES,
 	cart: CART.VALUES,
 });
 
 export const StoreModule = defineModule(DEFAULT)
 	.actions({
-		...TICKET_TYPES.ACTIONS,
+		...EVENT.ACTIONS,
+		...EVENT_TICKETS.ACTIONS,
 		...CART.ACTIONS,
 	})
 	.methods(({ getActions, getState }) => ({

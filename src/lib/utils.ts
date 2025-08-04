@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { google, outlook, ics } from "calendar-link";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -26,12 +27,19 @@ export function textColorForBgHsl(lightnessPercent = 78) {
 	return lightnessPercent < 55 ? "#fff" : "#111";
 }
 
-export function formatPriceCzk(value?: number) {
-	return value == null
-		? "—"
-		: new Intl.NumberFormat("cs-CZ", {
-				style: "currency",
-				currency: "CZK",
-				maximumFractionDigits: 0,
-			}).format(value);
+export function getEventCalendarLinks(event: T_Event) {
+	const base = {
+		uid: event.eventId,
+		title: event.namePub,
+		description: event.description,
+		location: event.place,
+		start: event.dateFrom, // ISO-8601, stays in UTC
+		end: event.dateTo,
+	};
+
+	return {
+		google: google(base), // → https://calendar.google.com/…
+		outlook: outlook(base), // → https://outlook.office.com/…
+		icsBlobUrl: URL.createObjectURL(new Blob([ics(base)], { type: "text/calendar;charset=utf-8" })),
+	};
 }

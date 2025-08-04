@@ -1,6 +1,6 @@
 import { StoreModule } from "@/store/mainStore";
 import { useTrackedModule } from "zoov/tracked";
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { useDidMountEffect } from "@/hooks/useDidMountEffect";
 import { colorForType, textColorForBgHsl } from "@/lib/utils";
 
@@ -9,15 +9,14 @@ import { Aside } from "@/components/Aside";
 import { Footer } from "@/components/Footer";
 import { SeatRow } from "@/components/SeatRow.tsx";
 
+import { Skeleton } from "@/components/ui/skeleton";
+
 import "./App.css";
 
 const isLoggedIn = false;
 
 export function App() {
-	const [{ cart, ticketTypes }, actions] = useTrackedModule(StoreModule);
-
-	const [event, setEvent] = useState<T_Event | null>(null);
-	const [eventTickets, setEventTickets] = useState<T_EventTickets | null>(null);
+	const [{ event, eventTickets, cart }, actions] = useTrackedModule(StoreModule);
 
 	// TODO: error handling
 	async function fetchEventTickets(eventId: T_Event["eventId"]) {
@@ -25,7 +24,7 @@ export function App() {
 			`https://nfctron-frontend-seating-case-study-2024.vercel.app/event-tickets?eventId=${eventId}`,
 		).then((res) => res.json());
 
-		setEventTickets(eventTicketsObject);
+		actions.setEventTickets(eventTicketsObject);
 		actions.setTicketTypes(eventTicketsObject.ticketTypes);
 	}
 
@@ -35,7 +34,7 @@ export function App() {
 			res.json(),
 		);
 
-		setEvent(eventObject);
+		actions.setEvent(eventObject);
 		fetchEventTickets(eventObject.eventId);
 	}
 
@@ -61,7 +60,7 @@ export function App() {
 	//}
 
 	function findTicketTypeName(ticketTypeId: string) {
-		return ticketTypes?.find(({ id }) => id === ticketTypeId)?.name ?? "NO NAME";
+		return eventTickets?.ticketTypes?.find(({ id }) => id === ticketTypeId)?.name ?? "NO NAME";
 	}
 
 	useDidMountEffect(() => {
@@ -111,12 +110,12 @@ export function App() {
 					</div>
 
 					{/* event info */}
-					<Aside event={event} />
+					{event ? <Aside event={event} /> : <Skeleton className="h-[20px] w-[100px] rounded-full" />}
 				</section>
 			</main>
 
 			{/* bottom cart affix (wrapper) */}
-			<Footer cart={cart} />
+			<Footer cart={cart} currencyIso={event?.currencyIso || null} />
 		</div>
 	);
 }

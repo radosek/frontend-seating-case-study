@@ -56,9 +56,9 @@ export function Nav() {
 
 	return (
 		<nav className="sticky top-0 left-0 right-0 bg-white border-b border-zinc-200 flex justify-center">
-			<div className="max-w-screen-lg p-4 grow flex items-center justify-between gap-3">
+			<div className="max-w-screen-lg p-4 grow grid grid-cols-3 items-center gap-3">
 				{/* Logo placeholder */}
-				<div className="max-w-[250px] w-full flex">
+				<div className="w-full flex">
 					{event ? (
 						<img src={event.headerImageUrl} alt={event.namePub} className="rounded-md size-12 object-cover" />
 					) : (
@@ -68,7 +68,7 @@ export function Nav() {
 
 				{/* Title placeholder */}
 				{event ? (
-					<span className="text-xl font-semibold text-zinc-900">{event.namePub}</span>
+					<span className="invisible sm:visible text-md md:text-lg text-zinc-900">{event.namePub}</span>
 				) : (
 					<div className="bg-zinc-100 rounded-md h-8 w-[200px]" />
 				)}

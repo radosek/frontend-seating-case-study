@@ -39,7 +39,7 @@ Aplikace by měla být schopna:
 ## 🌟 Bonusové Funkce
 
 -   [x] Umožnit přidání akce do kalendáře.
--   [ ] Multijazyčnost aplikace.
+-   [x] Multijazyčnost aplikace.
 
 _A dalším vychytávkám se meze nekladou! Ukažte, co umíte! 💫_
 

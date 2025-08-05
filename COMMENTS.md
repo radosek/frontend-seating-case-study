@@ -20,7 +20,7 @@ Rozepisování types by šlo udělat lépe tím, že by se vytvořil nový type,
 ## Fetch
 
 Podle toho jaká data by bylo potřeba tahat z API, tak bych zvolil třeba TanStack Query, ale spíš jsem ji nikdy moc nepoužval.
-Chybí totálně error handling. Řešil bych přes try/catch a také prozkoumal res.status. Hodilo by se taky to projet přes zod nebo podobnou knihovnu.
+Hodilo by se taky to projet přes zod nebo podobnou knihovnu a vyřešit error handling při res.statu trošku jinak.
 
 ## Aria
 
@@ -33,12 +33,23 @@ Zbytečně překombinovný store na toto demo i celkově na tento typ view/strá
 Normálně by každý slice měl mnohem víc values/actions. Dříve jsem používal Recoil, ale ten je deprecated, takže jedu Zustand.
 Zoov celkem pomáhá na komplexní state managment, ale přijde mi, že tam není aktivní development.
 
+## Aside
+
+Asi bych volil jiný elemnt, jelikož to na menším screenu není vlastně aside. Zjistěno teď při finalizaci UI.
 
 ## useDidMountEffect
 
 Používám, abych neměl při `StrictMode` dvoje data.
 Zárovň se to hodí v situaci, když chcem měnit např. state, až poté, co se opravdu změní a ne při mountu.
 Nakonec jsem vyměnil za klasicky useEffect, jelikož to nějak blbne v kombinaci Cloudflare Worker + Vite.
+
+## Lang
+
+Data z API jsem nepřekádal.
+
+## Forms
+
+Neřešil jsem pořádně validaci a například v "Checkout now" to není ani form. Validaci bych řešil třeba přes RHF.
 
 ## Deploy
 

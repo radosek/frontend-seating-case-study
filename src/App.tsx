@@ -121,7 +121,7 @@ export function App() {
 				</section>
 			</main>
 
-			<Toaster theme="system" position="bottom-center" duration={4000} className="rounded" visibleToasts={3} richColors expand />
+			<Toaster theme="system" position="bottom-center" duration={2000} className="rounded" visibleToasts={3} richColors expand />
 
 			{/* bottom cart affix (wrapper) */}
 			<Footer currencyIso={event?.currencyIso || null} />

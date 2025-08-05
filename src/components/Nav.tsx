@@ -2,6 +2,7 @@ import { StoreModule } from "@/store/mainStore";
 import { useTrackedModule } from "zoov/tracked";
 import { useState } from "react";
 
+import { useTranslation } from "react-i18next";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -26,6 +27,12 @@ export function Nav() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
+
+	const { t, i18n } = useTranslation();
+	const changeLanguage = (lng: string) => {
+		i18n.changeLanguage(lng);
+		localStorage.setItem("language", lng);
+	};
 
 	const handleLogin = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -75,6 +82,18 @@ export function Nav() {
 
 				{/* Right side */}
 				<div className="max-w-[250px] w-full flex justify-end">
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button variant="ghost" className="mr-2 text-zinc-900">
+								({i18n.language.toUpperCase()})
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent>
+							<DropdownMenuItem onClick={() => changeLanguage("en")}>English</DropdownMenuItem>
+							<DropdownMenuItem onClick={() => changeLanguage("cs")}>Čeština</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
+
 					{user ? (
 						<DropdownMenu>
 							<DropdownMenuTrigger>
@@ -98,7 +117,7 @@ export function Nav() {
 								<DropdownMenuSeparator />
 								<DropdownMenuGroup>
 									<DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
-										Logout
+										{t("logout")}
 									</DropdownMenuItem>
 								</DropdownMenuGroup>
 							</DropdownMenuContent>
@@ -106,12 +125,12 @@ export function Nav() {
 					) : (
 						<Popover>
 							<PopoverTrigger asChild>
-								<Button variant="secondary">Login or register</Button>
+								<Button variant="secondary">{t("loginOrRegister")}</Button>
 							</PopoverTrigger>
 							<PopoverContent align="end" className="w-[280px]">
 								<form onSubmit={handleLogin} className="grid gap-4">
 									<div className="grid gap-2">
-										<Label htmlFor="email">Email</Label>
+										<Label htmlFor="email">{t("email")}</Label>
 										<Input
 											id="email"
 											type="email"
@@ -123,7 +142,7 @@ export function Nav() {
 										/>
 									</div>
 									<div className="grid gap-2">
-										<Label htmlFor="password">Password</Label>
+										<Label htmlFor="password">{t("password")}</Label>
 										<Input
 											id="password"
 											type="password"
@@ -135,7 +154,7 @@ export function Nav() {
 										/>
 									</div>
 									<Button className="w-full" type="submit" disabled={loading}>
-										{loading ? "Logging in..." : "Login"}
+										{loading ? t("loggingIn") : t("login")}
 									</Button>
 								</form>
 							</PopoverContent>

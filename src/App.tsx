@@ -3,6 +3,8 @@ import { useTrackedModule } from "zoov/tracked";
 import { useMemo, useEffect } from "react";
 import { colorForType, textColorForBgHsl } from "@/lib/utils";
 
+import { useTranslation } from "react-i18next";
+
 import { Nav } from "@/components/Nav";
 import { Aside } from "@/components/Aside";
 import { Footer } from "@/components/Footer";
@@ -15,6 +17,8 @@ import "./App.css";
 
 export function App() {
 	const [{ event, eventTickets }, actions] = useTrackedModule(StoreModule);
+
+	const { t } = useTranslation();
 
 	// TODO: error handling
 	async function fetchEventTickets(eventId: T_Event["eventId"]) {
@@ -92,7 +96,7 @@ export function App() {
 										backgroundImage: "repeating-linear-gradient(45deg,#f1f1f1, #f1f1f1 6px, #e5e5e5 6px, #e5e5e5 12px)",
 									}}
 								/>
-								<span className="text-zinc-900 p-2 rounded">Unavailable</span>
+								<span className="text-zinc-900 p-2 rounded">{t("unavailable")}</span>
 							</div>
 						</div>
 					</div>

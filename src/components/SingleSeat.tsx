@@ -6,6 +6,8 @@ import { colorForType, textColorForBgHsl } from "@/lib/utils.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover.tsx";
 
+import { useTranslation } from "react-i18next";
+
 interface SeatProps extends React.HTMLAttributes<HTMLElement> {
 	place: number;
 	row: T_EventTickets["seatRows"][number];
@@ -18,6 +20,8 @@ export const SingleSeat = forwardRef<HTMLDivElement, SeatProps>(({ row, place },
 
 	const byPlace = new Map(row.seats.map((s) => [s.place, s]));
 	const seat: T_EventTickets["seatRows"][number]["seats"][number] | undefined = byPlace.get(place);
+
+	const { t } = useTranslation();
 
 	if (!seat) {
 		// Unavailable / sold / not present in feed
@@ -80,27 +84,27 @@ export const SingleSeat = forwardRef<HTMLDivElement, SeatProps>(({ row, place },
 			</PopoverTrigger>
 			<PopoverContent className="w-64 p-4 bg-white rounded-lg shadow-md border border-zinc-200">
 				<div className="flex flex-col gap-3">
-					<h3 className="text-lg font-semibold text-zinc-900 text-center">Seat Details</h3>
+					<h3 className="text-lg font-semibold text-zinc-900 text-center">{t("seatDetails")}</h3>
 					<div className="flex justify-between text-sm text-zinc-600">
-						<span>Row:</span>
+						<span>{t("row")}:</span>
 						<span className="font-medium">{row.seatRow}</span>
 					</div>
 					<div className="flex justify-between text-sm text-zinc-600">
-						<span>Seat:</span>
+						<span>{t("seat")}:</span>
 						<span className="font-medium">{place}</span>
 					</div>
 					<div className="flex justify-between text-sm text-zinc-600">
-						<span>Ticket Type:</span>
+						<span>{t("ticketType")}:</span>
 						<span className="font-medium">{ticketType?.name ?? "Unknown"}</span>
 					</div>
 					<div className="flex justify-between text-sm text-zinc-600">
-						<span>Price:</span>
+						<span>{t("price")}:</span>
 						<span className="font-medium text-xl text-zinc-900">
 							{ticketType?.price ?? 0} {event?.currencyIso ?? ""}
 						</span>
 					</div>
 					<Button variant={isInCart ? "destructive" : "default"} className="w-full mt-2" onClick={handleCartUpdate}>
-						{isInCart ? "Remove from Cart" : "Add to Cart"}
+						{isInCart ? t("removeFromCart") : t("addToCart")}
 					</Button>
 				</div>
 			</PopoverContent>

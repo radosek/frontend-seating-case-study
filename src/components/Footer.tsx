@@ -2,6 +2,8 @@ import { StoreModule } from "@/store/mainStore";
 import { useTrackedModule } from "zoov/tracked";
 import { useState } from "react";
 
+import { useTranslation } from "react-i18next";
+
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,6 +30,8 @@ export function Footer({ currencyIso }: Props) {
 	const [showDialog, setShowDialog] = useState(false);
 	const [innerUser, setInnerUser] = useState<T_User>(DEFAULT_USER_OBJECT);
 	const [processing, setProcessing] = useState(false);
+
+	const { t } = useTranslation();
 
 	function handleRemove(
 		seat: T_EventTickets["seatRows"][number]["seats"][number],
@@ -90,12 +94,9 @@ export function Footer({ currencyIso }: Props) {
 				{/* Cart summary */}
 				<div className="flex flex-col">
 					{cart.tickets.length ? (
-						<span>
-							Total for {cart.tickets.length} ticket
-							{cart.tickets.length > 1 && "s"}
-						</span>
+						<span>{t("totalForTickets", { count: cart.tickets.length })}</span>
 					) : (
-						<span>No tickets in cart</span>
+						<span>{t("noTicketsInCart")}</span>
 					)}
 					<span className="text-2xl font-semibold">
 						{cart.total <= 0 ? 0 : cart.total} {currencyIso ?? ""}
@@ -106,13 +107,13 @@ export function Footer({ currencyIso }: Props) {
 				<Dialog open={showDialog} onOpenChange={setShowDialog}>
 					<DialogTrigger asChild>
 						<Button disabled={!cart.tickets.length || cart.total <= 0} variant="default" onClick={() => setShowDialog(true)}>
-							Checkout now
+							{t("checkoutNow")}
 						</Button>
 					</DialogTrigger>
 					<DialogContent className="w-[90%] md:max-w-lg mx-auto max-w-lg text-zinc-900">
 						<DialogHeader>
-							<DialogTitle>Review your tickets</DialogTitle>
-							<DialogDescription>Verify your selection before proceeding to payment.</DialogDescription>
+							<DialogTitle>{t("reviewYourTickets")}</DialogTitle>
+							<DialogDescription>{t("verifySelection")}</DialogDescription>
 						</DialogHeader>
 
 						{/* Ticket list */}
@@ -128,7 +129,7 @@ export function Footer({ currencyIso }: Props) {
 											<div key={seatId} className="flex justify-between items-center">
 												<div className="flex flex-col text-sm">
 													<span className="font-medium">
-														Row {row ?? "-"} &middot; Seat {place}
+														{t("row")} {row ?? "-"} &middot; {t("seat")} {place}
 													</span>
 													<span className="text-zinc-500">{ticketType.name}</span>
 												</div>
@@ -150,7 +151,7 @@ export function Footer({ currencyIso }: Props) {
 								</div>
 							</ScrollArea>
 						) : (
-							<p className="text-sm text-center text-zinc-500">Your cart is empty.</p>
+							<p className="text-sm text-center text-zinc-500">{t("yourCartIsEmpty")}</p>
 						)}
 
 						<Separator />
@@ -158,7 +159,7 @@ export function Footer({ currencyIso }: Props) {
 						<div className="flex gap-2">
 							{!user?.firstName && (
 								<div className="grid gap-2 w-full">
-									<Label htmlFor="email">First name</Label>
+									<Label htmlFor="email">{t("firstName")}</Label>
 									<Input
 										id="first-name"
 										type="string"
@@ -171,7 +172,7 @@ export function Footer({ currencyIso }: Props) {
 
 							{!user?.lastName && (
 								<div className="grid gap-2 w-full">
-									<Label htmlFor="email">Last name</Label>
+									<Label htmlFor="email">{t("lastName")}</Label>
 									<Input
 										id="last-name"
 										type="string"
@@ -185,7 +186,7 @@ export function Footer({ currencyIso }: Props) {
 
 						{!user?.email && (
 							<div className="grid gap-2">
-								<Label htmlFor="email">Email for tickets</Label>
+								<Label htmlFor="email">{t("emailForTickets")}</Label>
 								<Input
 									id="email"
 									type="email"
@@ -198,7 +199,7 @@ export function Footer({ currencyIso }: Props) {
 
 						{/* Order summary */}
 						<div className="flex justify-between text-lg font-medium">
-							<span>Total</span>
+							<span>{t("total")}</span>
 							<span>
 								{cart.total <= 0 ? 0 : cart.total} {currencyIso}
 							</span>
@@ -206,7 +207,7 @@ export function Footer({ currencyIso }: Props) {
 
 						{/* Pay button */}
 						<Button className="w-full" onClick={handlePay} disabled={processing || !cart.tickets.length}>
-							{processing ? "Processing..." : "Pay"}
+							{processing ? t("processing") : t("pay")}
 						</Button>
 					</DialogContent>
 				</Dialog>

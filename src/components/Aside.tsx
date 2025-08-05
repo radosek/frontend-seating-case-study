@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { getEventCalendarLinks } from "@/lib/utils";
 
+import { useTranslation } from "react-i18next";
+
 type Props = { event: T_Event };
 
 export function Aside({ event }: Props) {
@@ -23,6 +25,8 @@ export function Aside({ event }: Props) {
 	});
 
 	const eventLinks = getEventCalendarLinks(event);
+
+	const { t } = useTranslation();
 
 	return (
 		<div className="w-full md:max-w-sm bg-white rounded-md shadow-sm p-4 flex flex-col gap-4">
@@ -46,7 +50,7 @@ export function Aside({ event }: Props) {
 
 			<Popover>
 				<PopoverTrigger asChild>
-					<Button variant="default">Add to calendar</Button>
+					<Button variant="default">{t("addToCalendar")}</Button>
 				</PopoverTrigger>
 
 				<PopoverContent align="start" className="w-56">
@@ -58,7 +62,7 @@ export function Aside({ event }: Props) {
 								rel="noopener noreferrer"
 								className="block w-full text-left hover:underline"
 							>
-								Google Calendar
+								{t("googleCalendar")}
 							</a>
 						</li>
 					</ul>

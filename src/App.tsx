@@ -65,7 +65,7 @@ export function App() {
 	}, [rows]);
 
 	function findTicketTypeName(ticketTypeId: string) {
-		return eventTickets?.ticketTypes?.find(({ id }) => id === ticketTypeId)?.name ?? "NO NAME";
+		return eventTickets?.ticketTypes?.find(({ id }) => id === ticketTypeId)?.name ?? "NO NAME"; // TODO: better error handling
 	}
 
 	useEffect(() => {

@@ -15,6 +15,7 @@ export function Aside({ event }: Props) {
 		hour: "2-digit",
 		minute: "2-digit",
 	});
+
 	const formattedDateTo = new Date(event.dateTo).toLocaleString("default", {
 		weekday: "short",
 		year: "numeric",

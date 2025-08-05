@@ -30,20 +30,23 @@ export function Nav() {
 	const [loading, setLoading] = useState(false);
 
 	const { t, i18n } = useTranslation();
-	const changeLanguage = (lng: string) => {
+
+	function changeLanguage(lng: string) {
 		i18n.changeLanguage(lng);
 		localStorage.setItem("language", lng);
-	};
+	}
 
-	const handleLogin = async (e: React.FormEvent) => {
+	async function handleLogin(e: React.FormEvent) {
 		e.preventDefault();
 
 		if (!isValidEmail(email)) {
 			toast.error(t("invalidEmail"));
 			return;
 		}
+
 		if (loading) return;
 		setLoading(true);
+
 		try {
 			const res = await fetch("https://nfctron-frontend-seating-case-study-2024.vercel.app/login", {
 				method: "POST",
@@ -63,7 +66,7 @@ export function Nav() {
 		} finally {
 			setLoading(false);
 		}
-	};
+	}
 
 	const handleLogout = () => actions.setUser(null);
 

@@ -57,6 +57,7 @@ export const SingleSeat = forwardRef<HTMLDivElement, SeatProps>(({ row, place },
 		setPopoverOpen(false);
 	}
 
+	// ? Not needed, but why not
 	function handleContextMenu(e: React.MouseEvent<HTMLButtonElement>) {
 		e.preventDefault();
 		setPopoverOpen(!popoverOpen);

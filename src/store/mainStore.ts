@@ -1,11 +1,4 @@
 import { defineModule } from "zoov";
-import { setAutoFreeze } from "immer";
-//import { temporal } from "zundo";
-//import diff from "microdiff";
-//import { isNotEmptyObject } from "@/functions";
-//import throttle from "just-throttle";
-
-setAutoFreeze(false);
 
 import USER from "./slice/user";
 import EVENT from "./slice/event";
@@ -19,6 +12,7 @@ const DEFAULT = structuredClone({
 	cart: CART.VALUES,
 });
 
+// ? We have to use `methods` as actions are meant for single action
 export const StoreModule = defineModule(DEFAULT)
 	.actions({
 		...USER.ACTIONS,

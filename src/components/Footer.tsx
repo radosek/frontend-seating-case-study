@@ -34,7 +34,7 @@ export function Footer({ currencyIso }: Props) {
 
 	const { t } = useTranslation();
 
-	function handleRemove(
+	function handleRemoveTicket(
 		seat: T_EventTickets["seatRows"][number]["seats"][number],
 		row: T_EventTickets["seatRows"][number]["seatRow"],
 		price: number,
@@ -70,6 +70,7 @@ export function Footer({ currencyIso }: Props) {
 		}
 
 		setProcessing(true);
+
 		try {
 			const res = await fetch("https://nfctron-frontend-seating-case-study-2024.vercel.app/order", {
 				method: "POST",
@@ -129,6 +130,7 @@ export function Footer({ currencyIso }: Props) {
 									{cart.tickets.map(({ seatId, place, ticketTypeId, row }) => {
 										const ticketType = findTicketType(ticketTypeId);
 
+										// TODO: better error handling
 										if (!ticketType) return null;
 
 										return (
@@ -143,10 +145,11 @@ export function Footer({ currencyIso }: Props) {
 													<span className="whitespace-nowrap">
 														{ticketType.price ?? 0} {currencyIso}
 													</span>
+
 													<Button
 														size="icon"
 														variant="ghost"
-														onClick={() => handleRemove({ seatId, place, ticketTypeId }, row, ticketType.price)}
+														onClick={() => handleRemoveTicket({ seatId, place, ticketTypeId }, row, ticketType.price)}
 													>
 														<Trash2 className="h-4 w-4" />
 													</Button>

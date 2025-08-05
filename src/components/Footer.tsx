@@ -13,6 +13,7 @@ import { Separator } from "@/components/ui/separator";
 
 import { toast } from "sonner";
 import { Trash2 } from "lucide-react";
+import { isValidEmail } from "@/lib/utils";
 
 type Props = {
 	currencyIso: T_Event["currencyIso"] | null;
@@ -60,6 +61,11 @@ export function Footer({ currencyIso }: Props) {
 
 		if (!payload.user.email || !payload.user.firstName || !payload.user.lastName) {
 			toast.error("Please fill all fileds");
+			return;
+		}
+
+		if (!isValidEmail(payload.user.email)) {
+			toast.error(t("invalidEmail"));
 			return;
 		}
 

@@ -20,6 +20,7 @@ import { Label } from "@/components/ui/label";
 
 import Avatar from "boring-avatars";
 import { toast } from "sonner";
+import { isValidEmail } from "@/lib/utils";
 
 export function Nav() {
 	const [{ user, event }, actions] = useTrackedModule(StoreModule);
@@ -36,6 +37,11 @@ export function Nav() {
 
 	const handleLogin = async (e: React.FormEvent) => {
 		e.preventDefault();
+
+		if (!isValidEmail(email)) {
+			toast.error(t("invalidEmail"));
+			return;
+		}
 		if (loading) return;
 		setLoading(true);
 		try {

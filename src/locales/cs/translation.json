@@ -27,5 +27,6 @@
   "processing": "Zpracovávání...",
   "yourCartIsEmpty": "Váš košík je prázdný.",
   "seatDetails": "Detaily sedadla",
-  "unavailable": "Nedostupné"
+  "unavailable": "Nedostupné",
+  "invalidEmail": "Neplatný formát emailu"
 }

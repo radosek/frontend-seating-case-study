@@ -27,5 +27,6 @@
   "processing": "Processing...",
   "yourCartIsEmpty": "Your cart is empty.",
   "seatDetails": "Seat Details",
-  "unavailable": "Unavailable"
+  "unavailable": "Unavailable",
+  "invalidEmail": "Invalid email format"
 }

@@ -43,3 +43,6 @@ export function getEventCalendarLinks(event: T_Event) {
 		//icsBlobUrl: URL.createObjectURL(new Blob([ics(base)], { type: "text/calendar;charset=utf-8" })),
 	};
 }
+export function isValidEmail(email: string): boolean {
+	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}

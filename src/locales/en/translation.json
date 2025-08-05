@@ -28,5 +28,7 @@
   "yourCartIsEmpty": "Your cart is empty.",
   "seatDetails": "Seat Details",
   "unavailable": "Unavailable",
-  "invalidEmail": "Invalid email format"
+  "invalidEmail": "Invalid email format",
+  "failedToFetchEvent": "Failed to fetch event data",
+  "failedToFetchTickets": "Failed to fetch ticket data"
 }

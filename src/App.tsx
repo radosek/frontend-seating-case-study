@@ -12,6 +12,7 @@ import { SeatRow } from "@/components/SeatRow.tsx";
 
 import { Toaster } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
 
 import "./App.css";
 
@@ -20,24 +21,36 @@ export function App() {
 
 	const { t } = useTranslation();
 
-	// TODO: error handling
 	async function fetchEventTickets(eventId: T_Event["eventId"]) {
-		const eventTicketsObject: T_EventTickets = await fetch(
-			`https://nfctron-frontend-seating-case-study-2024.vercel.app/event-tickets?eventId=${eventId}`,
-		).then((res) => res.json());
+		try {
+			const res = await fetch(`https://nfctron-frontend-seating-case-study-2024.vercel.app/event-tickets?eventId=${eventId}`);
 
-		actions.setEventTickets(eventTicketsObject);
-		actions.setTicketTypes(eventTicketsObject.ticketTypes);
+			if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+			const eventTicketsObject: T_EventTickets = await res.json();
+
+			actions.setEventTickets(eventTicketsObject);
+			actions.setTicketTypes(eventTicketsObject.ticketTypes);
+			// biome-ignore lint/correctness/noUnusedVariables: OK
+		} catch (error) {
+			toast.error(t("failedToFetchTickets"));
+		}
 	}
 
-	// TODO: error handling
 	async function fetchEvent() {
-		const eventObject: T_Event = await fetch("https://nfctron-frontend-seating-case-study-2024.vercel.app/event").then((res) =>
-			res.json(),
-		);
+		try {
+			const res = await fetch("https://nfctron-frontend-seating-case-study-2024.vercel.app/event");
 
-		actions.setEvent(eventObject);
-		fetchEventTickets(eventObject.eventId);
+			if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+			const eventObject: T_Event = await res.json();
+
+			actions.setEvent(eventObject);
+			fetchEventTickets(eventObject.eventId);
+			// biome-ignore lint/correctness/noUnusedVariables: OK
+		} catch (error) {
+			toast.error(t("failedToFetchEvent"));
+		}
 	}
 
 	const rows: T_EventTickets["seatRows"] = useMemo(

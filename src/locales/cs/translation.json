@@ -28,5 +28,7 @@
   "yourCartIsEmpty": "Váš košík je prázdný.",
   "seatDetails": "Detaily sedadla",
   "unavailable": "Nedostupné",
-  "invalidEmail": "Neplatný formát emailu"
+  "invalidEmail": "Neplatný formát emailu",
+  "failedToFetchEvent": "Nepodařilo se načíst data události",
+  "failedToFetchTickets": "Nepodařilo se načíst data lístků"
 }

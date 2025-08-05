@@ -65,23 +65,23 @@ export const SingleSeat = forwardRef<HTMLDivElement, SeatProps>(({ row, place },
 	const bg = colorForType(seat.ticketTypeId);
 	const fg = textColorForBgHsl(78);
 
+	const popTriggerClass = [
+		"h-9 rounded-md border text-xs transition",
+		"hover:ring-2 hover:ring-zinc-950/40",
+		isInCart ? "ring-2 ring-zinc-950" : "",
+	].join(" ");
+
 	return (
 		<Popover open={popoverOpen} onOpenChange={(change) => setPopoverOpen(change)}>
 			<PopoverTrigger
 				onContextMenu={handleContextMenu}
 				title={`Row ${row.seatRow} • Place ${place}`}
-				className={[
-					"h-9 rounded-md border text-xs transition",
-					"hover:ring-2 hover:ring-zinc-950/40",
-					isInCart ? "ring-2 ring-zinc-950" : "",
-				].join(" ")}
-				style={{
-					backgroundColor: bg,
-					color: fg,
-				}}
+				className={popTriggerClass}
+				style={{ backgroundColor: bg, color: fg }}
 			>
 				<div ref={ref}>{place}</div>
 			</PopoverTrigger>
+
 			<PopoverContent className="w-64 p-4 bg-white rounded-lg shadow-md border border-zinc-200">
 				<div className="flex flex-col gap-3">
 					<h3 className="text-lg font-semibold text-zinc-900 text-center">{t("seatDetails")}</h3>
@@ -103,6 +103,7 @@ export const SingleSeat = forwardRef<HTMLDivElement, SeatProps>(({ row, place },
 							{ticketType?.price ?? 0} {event?.currencyIso ?? ""}
 						</span>
 					</div>
+
 					<Button variant={isInCart ? "destructive" : "default"} className="w-full mt-2" onClick={handleCartUpdate}>
 						{isInCart ? t("removeFromCart") : t("addToCart")}
 					</Button>

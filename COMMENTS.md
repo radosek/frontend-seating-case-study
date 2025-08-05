@@ -3,6 +3,7 @@
 Na některé věci použit ChatGPT a RepoPrompt, jelikož je mnohem rychlejší některé věci nechat vygenerovat, než to psát.
 Na některých věcech jsem propálil více času, abych si na tom dal záležet, než abych to stihl za co nejrychlejší dobu.
 Podle konkretního zádaní a dalších okolností bych řešil rozložení času individuálně.
+Pár věcí by se dalo ještě vyladit a upsořádat lépe, ale už to jdu poslat :D
 
 ## Login
 

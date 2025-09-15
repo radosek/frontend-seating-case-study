@@ -31,8 +31,8 @@ export function App() {
 
 			actions.setEventTickets(eventTicketsObject);
 			actions.setTicketTypes(eventTicketsObject.ticketTypes);
-			// biome-ignore lint/correctness/noUnusedVariables: OK
-		} catch (error) {
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		} catch (_error) {
 			toast.error(t("failedToFetchTickets"));
 		}
 	}
@@ -47,8 +47,8 @@ export function App() {
 
 			actions.setEvent(eventObject);
 			fetchEventTickets(eventObject.eventId);
-			// biome-ignore lint/correctness/noUnusedVariables: OK
-		} catch (error) {
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		} catch (_error) {
 			toast.error(t("failedToFetchEvent"));
 		}
 	}
@@ -60,7 +60,11 @@ export function App() {
 
 	const apiTicketTypes = useMemo(() => {
 		const set = new Set<string>();
-		rows.forEach((r) => r.seats.forEach((s) => set.add(s.ticketTypeId)));
+		for (const r of rows) {
+			for (const s of r.seats) {
+				set.add(s.ticketTypeId);
+			}
+		}
 		return [...set];
 	}, [rows]);
 
@@ -70,6 +74,7 @@ export function App() {
 
 	useEffect(() => {
 		fetchEvent();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
